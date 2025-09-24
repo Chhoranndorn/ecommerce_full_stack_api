@@ -59,3 +59,21 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+# Laravel 12 Project
+
+## Requirements
+- PHP 8.2+
+- Composer
+- MySQL (via XAMPP)
+- Node.js & npm (for Vite)
+
+## Quick Start
+```bash
+git clone https://github.com/yourusername/yourproject.git
+cd yourproject
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+composer run dev
