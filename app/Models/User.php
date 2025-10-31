@@ -22,6 +22,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'google_id',
+        'apple_id',
+        'phone_verified',
+        'language',
+        'notifications_enabled',
     ];
 
     /**
@@ -44,6 +50,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'phone_verified' => 'boolean',
         ];
     }
 }
