@@ -17,6 +17,15 @@ class AppSetting extends Model
         'phone',
         'email',
         'address',
+        'about_us',
+        'about_us_kh',
+        'banner_image',
+        'facebook',
+        'instagram',
+        'telegram',
+        'website',
+        'latitude',
+        'longitude',
         'currency',
         'currency_symbol',
         'delivery_fee',
@@ -28,6 +37,8 @@ class AppSetting extends Model
     protected $casts = [
         'delivery_fee' => 'decimal:2',
         'tax_rate' => 'decimal:2',
+        'latitude' => 'decimal:8',
+        'longitude' => 'decimal:8',
         'is_maintenance' => 'boolean',
     ];
 }

@@ -10,6 +10,16 @@ use App\Http\Controllers\Api\OnboardingController;
 use App\Http\Controllers\Api\LanguageController;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\WishlistController;
+use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\QuoteController;
+use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\DeliveryMethodController;
+use App\Http\Controllers\Api\CouponController;
+use App\Http\Controllers\Api\SpecialController;
+use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\AppSettingController;
+use App\Http\Controllers\Api\ProfileController;
 
 // Register & Login
 Route::post('/register', [AuthController::class, 'register']);
@@ -51,11 +61,22 @@ Route::get('/search', [ProductController::class, 'search']);
 // App configuration/settings route
 Route::get('/config', [AppConfigController::class, 'index']);
 
+// About us route
+Route::get('/about-us', [AppSettingController::class, 'getAboutUs']);
+
 // Onboarding screens route
 Route::get('/onboarding', [OnboardingController::class, 'index']);
 
 // Languages route
 Route::get('/languages', [LanguageController::class, 'index']);
+
+// Delivery methods route
+Route::get('/delivery-methods', [DeliveryMethodController::class, 'index']);
+Route::get('/delivery-methods/{id}', [DeliveryMethodController::class, 'show']);
+
+// Specials/Promotions route
+Route::get('/specials', [SpecialController::class, 'index']);
+Route::get('/specials/{id}', [SpecialController::class, 'show']);
 
 // User Profile routes (Protected)
 Route::middleware('auth:sanctum')->group(function () {
@@ -65,10 +86,58 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/user/password', [UserProfileController::class, 'changePassword']);
     Route::post('/user/notifications/toggle', [UserProfileController::class, 'toggleNotifications']);
 
+    // Profile screen with stats (comprehensive)
+    Route::get('/profile', [ProfileController::class, 'index']);
+    Route::put('/profile', [ProfileController::class, 'update']);
+
     // Wishlist routes
     Route::get('/wishlist', [WishlistController::class, 'index']);
     Route::post('/wishlist', [WishlistController::class, 'store']);
     Route::delete('/wishlist/{productId}', [WishlistController::class, 'destroy']);
     Route::post('/wishlist/toggle', [WishlistController::class, 'toggle']);
     Route::get('/wishlist/check/{productId}', [WishlistController::class, 'check']);
+
+    // Cart routes
+    Route::get('/cart', [CartController::class, 'index']);
+    Route::post('/cart', [CartController::class, 'store']);
+    Route::put('/cart/{id}', [CartController::class, 'update']);
+    Route::delete('/cart/{id}', [CartController::class, 'destroy']);
+    Route::post('/cart/clear', [CartController::class, 'clear']);
+    Route::post('/cart/{id}/increment', [CartController::class, 'increment']);
+    Route::post('/cart/{id}/decrement', [CartController::class, 'decrement']);
+
+    // Order routes
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/orders/{id}', [OrderController::class, 'show']);
+    Route::post('/orders', [OrderController::class, 'store']);
+    Route::get('/orders/{id}/invoice', [OrderController::class, 'invoice']);
+    Route::post('/orders/{id}/cancel', [OrderController::class, 'cancel']);
+
+    // Quote routes (Quotation - សម្រង់តម្លៃ)
+    Route::get('/quotes', [QuoteController::class, 'index']);
+    Route::get('/quotes/{id}', [QuoteController::class, 'show']);
+    Route::post('/quotes', [QuoteController::class, 'store']);
+    Route::put('/quotes/{id}', [QuoteController::class, 'update']);
+    Route::delete('/quotes/{id}', [QuoteController::class, 'destroy']);
+    Route::post('/quotes/{id}/convert-to-order', [QuoteController::class, 'convertToOrder']);
+
+    // Address routes (អាសយដ្ឋាន)
+    Route::get('/addresses', [AddressController::class, 'index']);
+    Route::get('/addresses/default', [AddressController::class, 'getDefault']);
+    Route::get('/addresses/{id}', [AddressController::class, 'show']);
+    Route::post('/addresses', [AddressController::class, 'store']);
+    Route::put('/addresses/{id}', [AddressController::class, 'update']);
+    Route::delete('/addresses/{id}', [AddressController::class, 'destroy']);
+    Route::post('/addresses/{id}/set-default', [AddressController::class, 'setDefault']);
+
+    // Coupon routes
+    Route::post('/coupons/verify', [CouponController::class, 'verify']);
+
+    // Notification routes
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::get('/notifications/unread-count', [NotificationController::class, 'unreadCount']);
+    Route::get('/notifications/{id}', [NotificationController::class, 'show']);
+    Route::post('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead']);
+    Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
+    Route::delete('/notifications/{id}', [NotificationController::class, 'destroy']);
 });
