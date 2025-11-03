@@ -23,6 +23,11 @@ class UserProfileController extends Controller
                 'email' => $user->email,
                 'phone' => $user->phone,
                 'phone_verified' => $user->phone_verified,
+                'whatsapp' => $user->whatsapp,
+                'telegram' => $user->telegram,
+                'wechat' => $user->wechat,
+                'address' => $user->address,
+                'profile_picture' => $user->profile_picture,
                 'language' => $user->language ?? 'km',
                 'notifications_enabled' => $user->notifications_enabled ?? true,
                 'created_at' => $user->created_at,
@@ -41,9 +46,23 @@ class UserProfileController extends Controller
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|email|unique:users,email,' . $user->id,
             'phone' => 'sometimes|string|unique:users,phone,' . $user->id,
+            'whatsapp' => 'nullable|string|max:255',
+            'telegram' => 'nullable|string|max:255',
+            'wechat' => 'nullable|string|max:255',
+            'address' => 'nullable|string',
+            'profile_picture' => 'nullable|string',
         ]);
 
-        $user->update($request->only(['name', 'email', 'phone']));
+        $user->update($request->only([
+            'name',
+            'email',
+            'phone',
+            'whatsapp',
+            'telegram',
+            'wechat',
+            'address',
+            'profile_picture'
+        ]));
 
         return response()->json([
             'success' => true,
@@ -53,6 +72,11 @@ class UserProfileController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'phone' => $user->phone,
+                'whatsapp' => $user->whatsapp,
+                'telegram' => $user->telegram,
+                'wechat' => $user->wechat,
+                'address' => $user->address,
+                'profile_picture' => $user->profile_picture,
             ],
         ]);
     }

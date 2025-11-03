@@ -20,6 +20,10 @@ use App\Http\Controllers\Api\SpecialController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\AppSettingController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\WalletController;
+use App\Http\Controllers\Api\PointController;
+use App\Http\Controllers\Api\FeedbackController;
+use App\Http\Controllers\Api\ShareController;
 
 // Register & Login
 Route::post('/register', [AuthController::class, 'register']);
@@ -140,4 +144,23 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead']);
     Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy']);
+
+    // Wallet routes
+    Route::get('/wallet/balance', [WalletController::class, 'balance']);
+    Route::get('/wallet/transactions', [WalletController::class, 'transactions']);
+
+    // Points routes
+    Route::get('/points/transactions', [PointController::class, 'transactions']);
+    Route::get('/points/earned', [PointController::class, 'earned']);
+    Route::get('/points/withdrawn', [PointController::class, 'withdrawn']);
+    Route::post('/points/convert', [PointController::class, 'convert']);
+
+    // Feedback routes
+    Route::post('/feedback', [FeedbackController::class, 'submit']);
+    Route::get('/feedback', [FeedbackController::class, 'index']);
+
+    // Share routes
+    Route::get('/share/profile', [ShareController::class, 'profile']);
+    Route::get('/share/product/{productId}', [ShareController::class, 'product']);
+    Route::get('/share/referral', [ShareController::class, 'referral']);
 });

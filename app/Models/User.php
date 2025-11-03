@@ -28,6 +28,13 @@ class User extends Authenticatable
         'phone_verified',
         'language',
         'notifications_enabled',
+        'whatsapp',
+        'telegram',
+        'wechat',
+        'address',
+        'profile_picture',
+        'wallet_balance',
+        'points_balance',
     ];
 
     /**
@@ -51,6 +58,24 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'phone_verified' => 'boolean',
+            'wallet_balance' => 'decimal:2',
+            'points_balance' => 'integer',
         ];
+    }
+
+    /**
+     * Get wallet transactions for this user
+     */
+    public function walletTransactions()
+    {
+        return $this->hasMany(WalletTransaction::class);
+    }
+
+    /**
+     * Get point transactions for this user
+     */
+    public function pointTransactions()
+    {
+        return $this->hasMany(PointTransaction::class);
     }
 }
